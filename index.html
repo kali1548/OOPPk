@@ -273,7 +273,7 @@ function getKey() {
     document.getElementById("status").textContent = "Generating license...";
     document.getElementById("licenseText").textContent = "-";
 
-    fetch("https://corsproxy.io/?https://licenseauth.online/api/seller/?sellerkey=6f5392bec262b97f007dbea64bdce936&type=add&expiry=0.25&mask=KKALI_bypass_free_********&level=1&amount=1&character=%C2%ACe=&format=json")
+    fetch("https://licenseauth.online/api/seller/?sellerkey=62b2b7b8dabe1b46c8dccbe4ed8b9ca6&type=add&expiry=0.25&mask=KALI_BP_VIP_******&level=1&amount=1&character=Â¬e=&format=json")
         .then(r => r.json())
         .then(data => {
             if (data.success && data.key) {
@@ -303,3 +303,4 @@ function copyKey() {
 
 </body>
 </html>
+
