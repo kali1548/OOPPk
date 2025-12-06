@@ -15,11 +15,6 @@
         align-items: center;
         height: 100vh;
         font-family: "Segoe UI", sans-serif;
-        overflow: hidden;
-        user-select: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
     }
 
     .card {
@@ -31,8 +26,6 @@
         text-align: center;
         box-shadow: 0 15px 55px rgba(255, 255, 255, 0.05);
         animation: fadeIn .5s ease;
-        position: relative;
-        z-index: 10;
     }
 
     @keyframes fadeIn {
@@ -126,22 +119,10 @@
         color: #969696;
         min-height: 16px;
     }
-    
-    /* إضافة طبقة حماية لمنع فحص العناصر */
-    .protector {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 9999;
-        pointer-events: none;
-    }
 </style>
 </head>
 
 <body>
-<div class="protector"></div>
 <div class="card">
 
     <div class="logo">K</div>
@@ -161,67 +142,6 @@
 </div>
 
 <script>
-// منع فتح أدوات المطور
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-    return false;
-});
-
-document.addEventListener('keydown', function(e) {
-    // F12
-    if(e.keyCode === 123) {
-        e.preventDefault();
-        return false;
-    }
-    // Ctrl+Shift+I
-    if(e.ctrlKey && e.shiftKey && e.keyCode === 73) {
-        e.preventDefault();
-        return false;
-    }
-    // Ctrl+Shift+J
-    if(e.ctrlKey && e.shiftKey && e.keyCode === 74) {
-        e.preventDefault();
-        return false;
-    }
-    // Ctrl+U
-    if(e.ctrlKey && e.keyCode === 85) {
-        e.preventDefault();
-        return false;
-    }
-});
-
-// منع فتح أدوات المطور عن طريق النقر الأيمن
-document.onkeydown = function(e) {
-    if(event.keyCode == 123) {
-        return false;
-    }
-    if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
-        return false;
-    }
-    if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
-        return false;
-    }
-    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
-        return false;
-    }
-}
-
-// منع التحديد والنقر الأيمن
-document.addEventListener('selectstart', function(e) {
-    e.preventDefault();
-    return false;
-});
-
-// منع فتح أدوات المطور عن طريق الفحص
-setInterval(function() {
-    if (window.outerHeight - window.innerHeight > 200 || 
-        window.outerWidth - window.innerWidth > 200) {
-        window.close();
-        window.location.href = "about:blank";
-    }
-}, 1000);
-
-// الكود الأصلي للتراخيص
 const COOLDOWN_MS = 3 * 60 * 60 * 1000; // 3 ساعات
 const STORAGE_KEY = "kali_last_license_time";
 
@@ -258,12 +178,10 @@ function updateCooldownUI() {
     }
 }
 
-// حدّ كل ثانية نحدّث العد التنازلي
 setInterval(updateCooldownUI, 1000);
 window.addEventListener("load", updateCooldownUI);
 
 function getKey() {
-    // تأكيد الكولداون من جديد
     const remaining = getRemainingMs();
     if (remaining > 0) {
         updateCooldownUI();
@@ -273,14 +191,13 @@ function getKey() {
     document.getElementById("status").textContent = "Generating license...";
     document.getElementById("licenseText").textContent = "-";
 
-    fetch("https://licenseauth.online/api/seller/?sellerkey=62b2b7b8dabe1b46c8dccbe4ed8b9ca6&type=add&expiry=0.25&mask=KALI_BP_VIP_******&level=1&amount=1&character=%C2%ACe=&format=json")
+    fetch("https://corsproxy.io/?https://licenseauth.online/api/seller/?sellerkey=62b2b7b8dabe1b46c8dccbe4ed8b9ca6&type=add&expiry=1&mask=******-******-******-******-******-******&level=1&amount=1&character=¬e=&format=json")
         .then(r => r.json())
         .then(data => {
             if (data.success && data.key) {
                 document.getElementById("licenseText").textContent = data.key;
                 document.getElementById("status").textContent = "License generated successfully ✔";
 
-                // خزّن وقت آخر ترخيص
                 localStorage.setItem(STORAGE_KEY, Date.now().toString());
                 updateCooldownUI();
             } else {
@@ -301,7 +218,6 @@ function copyKey() {
 }
 </script>
 
+
 </body>
 </html>
-
-
