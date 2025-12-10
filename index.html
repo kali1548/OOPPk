@@ -178,10 +178,12 @@ function updateCooldownUI() {
     }
 }
 
+// حدّ كل ثانية نحدّث العد التنازلي
 setInterval(updateCooldownUI, 1000);
 window.addEventListener("load", updateCooldownUI);
 
 function getKey() {
+    // تأكيد الكولداون من جديد
     const remaining = getRemainingMs();
     if (remaining > 0) {
         updateCooldownUI();
@@ -191,23 +193,24 @@ function getKey() {
     document.getElementById("status").textContent = "Generating license...";
     document.getElementById("licenseText").textContent = "-";
 
-    fetch("https://corsproxy.io/?https://licenseauth.online/api/seller/?sellerkey=62b2b7b8dabe1b46c8dccbe4ed8b9ca6&type=add&expiry=1&mask=******-******-******-******-******-******&level=1&amount=1&character=¬e=&format=json")
-        .then(r => r.json())
-        .then(data => {
-            if (data.success && data.key) {
-                document.getElementById("licenseText").textContent = data.key;
-                document.getElementById("status").textContent = "License generated successfully ✔";
+    fetch("https://corsproxy.io/?https://licenseauth.online/api/seller/?sellerkey=62b2b7b8dabe1b46c8dccbe4ed8b9ca6&type=add&expiry=1&mask=******-******-******-******-******-******&level=1&amount=1&character=&format=json")
+    .then(r => r.json())
+    .then(data => {
+        if (data.success && data.key) {
+            document.getElementById("licenseText").textContent = data.key;
+            document.getElementById("status").textContent = "License generated successfully ✔";
 
-                localStorage.setItem(STORAGE_KEY, Date.now().toString());
-                updateCooldownUI();
-            } else {
-                document.getElementById("status").textContent =
-                    "Error: " + (data.message || "Failed");
-            }
-        })
-        .catch(() => {
-            document.getElementById("status").textContent = "Error: Cannot reach server.";
-        });
+            // خزّن وقت آخر ترخيص
+            localStorage.setItem(STORAGE_KEY, Date.now().toString());
+            updateCooldownUI();
+        } else {
+            document.getElementById("status").textContent =
+                "Error: " + (data.message || "Failed");
+        }
+    })
+    .catch(() => {
+        document.getElementById("status").textContent = "Error: Cannot reach server.";
+    });
 }
 
 function copyKey() {
@@ -217,7 +220,6 @@ function copyKey() {
     document.getElementById("status").textContent = "Copied ✔";
 }
 </script>
-
 
 </body>
 </html>
