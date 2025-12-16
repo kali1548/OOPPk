@@ -1,225 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
-<meta charset="UTF-8">
-<title>KALI Free License</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>VG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<style>
-    body {
-        margin: 0;
-        background: #000;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        font-family: "Segoe UI", sans-serif;
-    }
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            text-align: center;
+            padding: 50px;
+        }
 
-    .card {
-        background: #0b0b0b;
-        padding: 40px;
-        width: 420px;
-        border-radius: 22px;
-        border: 1px solid #1c1c1c;
-        text-align: center;
-        box-shadow: 0 15px 55px rgba(255, 255, 255, 0.05);
-        animation: fadeIn .5s ease;
-    }
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
 
-    @keyframes fadeIn {
-        from {opacity: 0; transform: translateY(10px);}
-        to {opacity: 1; transform: translateY(0);}
-    }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #00eaff;
+            text-shadow: 0 0 8px #00eaff;
+        }
 
-    .logo {
-        width: 80px;
-        height: 80px;
-        border: 2px solid #fff;
-        border-radius: 50%;
-        margin: 0 auto 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 45px;
-        font-weight: 600;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
+        p {
+            font-size: 1.3em;
+            color: #bbbbbb;
+            margin-bottom: 40px;
+        }
 
-    h2 {
-        margin-bottom: 8px;
-        font-size: 22px;
-        letter-spacing: 1px;
-        font-weight: 700;
-    }
-
-    p {
-        margin-bottom: 25px;
-        color: #bdbdbd;
-        font-size: 14px;
-    }
-
-    #getBtn {
-        width: 100%;
-        padding: 15px 0;
-        border-radius: 30px;
-        border: none;
-        background: linear-gradient(90deg, #fff, #d9d9d9);
-        color: #000;
-        font-size: 15px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: .2s;
-    }
-    #getBtn:hover:enabled {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(255,255,255,0.15);
-    }
-    #getBtn:disabled {
-        opacity: 0.5;
-        cursor: default;
-        box-shadow: none;
-    }
-
-    .box {
-        display: flex;
-        margin-top: 18px;
-        background: #111;
-        border: 1px solid #333;
-        border-radius: 12px;
-        padding: 12px;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    #licenseText {
-        font-size: 14px;
-        font-family: "JetBrains Mono", monospace;
-        letter-spacing: 0.5px;
-    }
-
-    #copyBtn {
-        background: #222;
-        border: 1px solid #444;
-        color: white;
-        padding: 8px 12px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: .15s;
-    }
-
-    #copyBtn:hover {
-        background: #333;
-    }
-
-    #status {
-        margin-top: 12px;
-        font-size: 13px;
-        color: #969696;
-        min-height: 16px;
-    }
-</style>
+        footer {
+            margin-top: 60px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
 </head>
 
 <body>
-<div class="card">
+    <div class="container">
+        <h1>VG</h1>
+        <p>Welcome to the official VG website</p>
 
-    <div class="logo">K</div>
-
-    <h2>FREE LICENSE</h2>
-    <p>Click the button below to instantly generate a free license key.</p>
-
-    <button id="getBtn" onclick="getKey()">Get Free License</button>
-
-    <div class="box">
-        <span id="licenseText">-</span>
-        <button id="copyBtn" onclick="copyKey()">Copy</button>
+        <footer>
+            © 2025 VG — All Rights Reserved
+        </footer>
     </div>
-
-    <div id="status"></div>
-
-</div>
-
-<script>
-const COOLDOWN_MS = 3 * 60 * 60 * 1000; // 3 ساعات
-const STORAGE_KEY = "kali_last_license_time";
-
-function getRemainingMs() {
-    const last = localStorage.getItem(STORAGE_KEY);
-    if (!last) return 0;
-    const diff = Date.now() - parseInt(last, 10);
-    if (diff >= COOLDOWN_MS) return 0;
-    return COOLDOWN_MS - diff;
-}
-
-function formatTime(ms) {
-    let s = Math.floor(ms / 1000);
-    const h = Math.floor(s / 3600);
-    s %= 3600;
-    const m = Math.floor(s / 60);
-    s %= 60;
-    return `${h}h ${m}m ${s}s`;
-}
-
-function updateCooldownUI() {
-    const btn = document.getElementById("getBtn");
-    const status = document.getElementById("status");
-    const remaining = getRemainingMs();
-
-    if (remaining > 0) {
-        btn.disabled = true;
-        status.textContent = "You can get a new license in " + formatTime(remaining);
-    } else {
-        btn.disabled = false;
-        if (!status.textContent.startsWith("License generated")) {
-            status.textContent = "";
-        }
-    }
-}
-
-// حدّ كل ثانية نحدّث العد التنازلي
-setInterval(updateCooldownUI, 1000);
-window.addEventListener("load", updateCooldownUI);
-
-function getKey() {
-    // تأكيد الكولداون من جديد
-    const remaining = getRemainingMs();
-    if (remaining > 0) {
-        updateCooldownUI();
-        return;
-    }
-
-    document.getElementById("status").textContent = "Generating license...";
-    document.getElementById("licenseText").textContent = "-";
-
-    fetch("https://corsproxy.io/?https://licenseauth.online/api/seller/?sellerkey=62b2b7b8dabe1b46c8dccbe4ed8b9ca6&type=add&expiry=1&mask=******-******-******-******-******-******&level=1&amount=1&character=&format=json")
-    .then(r => r.json())
-    .then(data => {
-        if (data.success && data.key) {
-            document.getElementById("licenseText").textContent = data.key;
-            document.getElementById("status").textContent = "License generated successfully ✔";
-
-            // خزّن وقت آخر ترخيص
-            localStorage.setItem(STORAGE_KEY, Date.now().toString());
-            updateCooldownUI();
-        } else {
-            document.getElementById("status").textContent =
-                "Error: " + (data.message || "Failed");
-        }
-    })
-    .catch(() => {
-        document.getElementById("status").textContent = "Error: Cannot reach server.";
-    });
-}
-
-function copyKey() {
-    const key = document.getElementById("licenseText").textContent;
-    if (!key || key === "-") return;
-    navigator.clipboard.writeText(key);
-    document.getElementById("status").textContent = "Copied ✔";
-}
-</script>
-
 </body>
 </html>
